@@ -93,11 +93,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "kimin"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
+  bio              : "Very Very **amazing** Simple person."
   location         : "Somewhere"
-  email            :
+  email            : zinnia98@nate.com
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
