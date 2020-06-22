@@ -1,0 +1,77 @@
+I"6<blockquote>
+  <p>This is code blocks and highlighting test page for <a href="https://github.com/yizeng/jekyll-theme-simple-texture">Simple Texture</a> theme.</p>
+</blockquote>
+
+<ul class="toc" id="markdown-toc">
+  <li><a href="#heading-code-spans" id="markdown-toc-heading-code-spans">Code Spans</a></li>
+  <li><a href="#heading-fenced-code-blocks" id="markdown-toc-heading-fenced-code-blocks">Fenced Code Blocks</a></li>
+  <li><a href="#heading-simple-codeblock-with-long-lines" id="markdown-toc-heading-simple-codeblock-with-long-lines">Simple codeblock with long lines</a></li>
+  <li><a href="#heading-language-of-code-blocks" id="markdown-toc-heading-language-of-code-blocks">Language of Code Blocks</a></li>
+  <li><a href="#heading-highlighted" id="markdown-toc-heading-highlighted">Highlighted</a>    <ul>
+      <li><a href="#heading-external-gist" id="markdown-toc-heading-external-gist">External Gist</a></li>
+      <li><a href="#heading-simple-highlight" id="markdown-toc-heading-simple-highlight">Simple Highlight</a></li>
+      <li><a href="#heading-highlight-with-long-lines" id="markdown-toc-heading-highlight-with-long-lines">Highlight with long lines</a></li>
+      <li><a href="#heading-highlight-with-line-numbers-and-long-lines" id="markdown-toc-heading-highlight-with-line-numbers-and-long-lines">Highlight with line numbers and long lines</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="heading-code-spans">Code Spans</h1>
+
+<p>This is a test for inline codeblocks like <code class="language-plaintext highlighter-rouge">C:/Ruby23-x64</code> or <code class="language-plaintext highlighter-rouge">SELECT  "offices".* FROM "offices" </code></p>
+
+<p>Here is a literal <code class="language-plaintext highlighter-rouge">`</code> backtick.
+And here is a Ruby code fragment <code class="language-plaintext highlighter-rouge"><span class="n">x</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span></code></p>
+
+<h1 id="heading-fenced-code-blocks">Fenced Code Blocks</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~~~~~~~
+code with tildes
+~~~~~~~~
+</code></pre></div></div>
+
+<h1 id="heading-simple-codeblock-with-long-lines">Simple codeblock with long lines</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function myFunction() {
+    alert("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+}
+</code></pre></div></div>
+
+<h1 id="heading-language-of-code-blocks">Language of Code Blocks</h1>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">what?</span>
+  <span class="mi">42</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h1 id="heading-highlighted">Highlighted</h1>
+
+<h2 id="heading-external-gist">External Gist</h2>
+
+<script src="https://gist.github.com/yizeng/9b871ad619e6dcdcc0545cac3101f361.js"></script>
+
+<h2 id="heading-simple-highlight">Simple Highlight</h2>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">foo</span>
+  <span class="nb">puts</span> <span class="s1">'foo'</span>
+<span class="k">end</span></code></pre></figure>
+
+<h2 id="heading-highlight-with-long-lines">Highlight with long lines</h2>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">class</span> <span class="nc">Hello</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="heading-highlight-with-line-numbers-and-long-lines">Highlight with line numbers and long lines</h2>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nx">myFunction</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+:ET
