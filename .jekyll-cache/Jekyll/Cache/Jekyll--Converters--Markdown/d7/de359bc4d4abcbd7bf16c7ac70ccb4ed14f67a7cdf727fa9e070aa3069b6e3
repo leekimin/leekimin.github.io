@@ -1,0 +1,5 @@
+I":<p>Hello World! This is the beginning of this theme.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+</code></pre></div></div>
+:ET
