@@ -2,13 +2,13 @@
 layout: post
 title: "Hello World!"
 description: "The first 'Hello world' post for Simple Texture theme."
-categories: [uncategorized]
-tags: [random, jekyll]
+categories: [ETC]
+tags: [ETC]
 redirect_from:
-  - /2020/06/22/
+  - /2020/06/24/
 ---
-Hello World! This is the beginning of this theme.
+
 
 ```java
-String str = "";
+String str = "Hello!!";
 ```
