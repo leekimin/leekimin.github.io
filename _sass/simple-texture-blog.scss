@@ -102,3 +102,7 @@ textarea {
 @import 'simple-texture/blog/footer';
 @import 'simple-texture/blog/content';
 @import 'simple-texture/blog/responsive';
+
+pre {
+    white-space: pre-wrap;
+}
