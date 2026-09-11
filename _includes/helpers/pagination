@@ -9,7 +9,8 @@
             {% if trail.num == paginator.page %}
                 <strong class="current">{{ trail.num }}</strong>
             {% else %}
-                <a class="internal" href="{{ trail.path | relative_url }}" title="{{ trail.title }}">{{ trail.num }}</a>
+                {% comment %} paginate-v2 의 trail.path 는 index.html 이 붙어 나온다. 주소 중복을 막기 위해 제거 {% endcomment %}
+                <a class="internal" href="{{ trail.path | remove: 'index.html' | relative_url }}" title="{{ trail.title }}">{{ trail.num }}</a>
             {% endif %}
         {% endfor %}
     </span>
