@@ -7,7 +7,16 @@ pagination:
   enabled: true
   permalink: '/page/:num/'
 ---
-{% assign posts_collate = paginator.posts %}
+{% comment %}
+  paginator 는 jekyll-paginate-v2 가 있을 때만 생성된다.
+  GitHub Pages 기본 빌드(Deploy from a branch)에는 이 플러그인이 없어 nil 이 되므로,
+  그 경우 전체 글 목록으로 폴백해 페이지가 비어버리는 것을 막는다.
+{% endcomment %}
+{% if paginator.posts %}
+    {% assign posts_collate = paginator.posts %}
+{% else %}
+    {% assign posts_collate = site.posts %}
+{% endif %}
 {% include helpers/posts_collate %}
 
 {% include helpers/pagination %}
