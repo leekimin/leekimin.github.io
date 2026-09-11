@@ -21,7 +21,7 @@ sass:
   style: compressed
 
 # Site Data
-url: http://leekimin.github.io # the base hostname & protocol for your site, e.g. http://example.com
+url: https://leekimin.github.io # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
 title: Zero(0)
 future: true
@@ -65,7 +65,7 @@ giscus:
   repo_id: MDEwOlJlcG9zaXRvcnkyNzI5MjA4NDg=
   category: Announcements
   category_id: DIC_kwDOEERxEM4DFXgv
-  mapping: pathname
+  mapping: og:title   # 한글 URL 인코딩 대신 글 제목을 Discussion 제목으로 사용
   strict: 0
   reactions_enabled: 1
   input_position: bottom
