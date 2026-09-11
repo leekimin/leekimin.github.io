@@ -67,7 +67,11 @@ layout: blog
                 </div>
             </footer>
             <div class="misc-content">
-                {% if site.disqus.shortname and page.comments != false %}
+                {% if site.giscus.repo_id and page.comments != false %}
+                    <div class="comments giscus-comments">
+                        {% include common/giscus.html %}
+                    </div>
+                {% elsif site.disqus.shortname and page.comments != false %}
                     {% include common/disqus.html %}
                     <div class="comments">
                         <button class="center-block show-hidden" title="{{ site.data.i18n[site.lang].show_comments }}" data-disqus-url="{{ page.url | absolute_url }}">{{ site.data.i18n[site.lang].show_comments }}</button>

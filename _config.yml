@@ -57,6 +57,21 @@ blog:
   cc_license_image: /assets/images/theme/cc-by-sa.png # An image of your CC License. 
   footer_content: A gem-based responsive simple texture styled <a href="http://jekyllrb.com/">Jekyll</a> theme.
 
+# 댓글 (giscus - GitHub Discussions 기반)
+# repo_id / category_id 가 채워져 있으면 giscus 를 쓰고, 비어 있으면 아래 disqus 로 폴백한다.
+# 특정 글에서 끄려면 해당 포스트 front matter 에 comments: false 를 넣는다.
+giscus:
+  repo: leekimin/leekimin.github.io
+  repo_id: MDEwOlJlcG9zaXRvcnkyNzI5MjA4NDg=
+  category: Announcements
+  category_id: DIC_kwDOEERxEM4DFXgv
+  mapping: pathname
+  strict: 0
+  reactions_enabled: 1
+  input_position: bottom
+  theme: preferred_color_scheme
+  lang: ko
+
 disqus:
   shortname: # e.g. yizeng
   public_key: # e.g. ULZ0b9TFefCUJHKQd4JCKv2v3u27YoG7YG8zXPewkWrT333Z0Se9YnxLzoV6VM8W
