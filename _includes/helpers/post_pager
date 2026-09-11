@@ -1,0 +1,165 @@
+<style>
+.post-pager-controls { margin: 1em 0; font-size: .9em; }
+.post-pager-controls select { margin: 0 .5em; padding: .2em .4em; }
+.post-pager-controls .page-info { margin-left: .5em; color: #777; }
+.post-list li.year-head { list-style: none; margin: 1.2em 0 .3em; font-weight: bold; font-size: 1.15em; }
+.post-list li.year-head:first-child { margin-top: 0; }
+.post-pagination { margin: 1.5em 0; }
+.post-pagination a, .post-pagination strong { display: inline-block; padding: .25em .6em; margin: 0 .15em; }
+.post-pagination strong.current { background: #eee; border-radius: 3px; }
+.post-pagination .gap { padding: 0 .2em; color: #999; }
+</style>
+
+<script>
+(function () {
+    'use strict';
+    var list = document.getElementById('post-list');
+    var pager = document.getElementById('post-pager');
+    var controls = document.getElementById('pager-controls');
+    var select = document.getElementById('page-size');
+    var summary = document.getElementById('page-summary');
+    if (!list || !pager || !controls || !select) { return; }
+
+    var items = [].slice.call(list.querySelectorAll('li[data-year]'));
+    var total = items.length;
+    var DEFAULT_SIZE = 20;
+    var STORE_KEY = 'blogPageSize';
+
+    function param(name) {
+        var m = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    function initialSize() {
+        var fromUrl = parseInt(param('size'), 10);
+        if (!isNaN(fromUrl) && fromUrl >= 0) { return fromUrl; }
+        try {
+            var saved = parseInt(localStorage.getItem(STORE_KEY), 10);
+            if (!isNaN(saved) && saved >= 0) { return saved; }
+        } catch (e) { /* 사생활 보호 모드 등에서 접근 불가 */ }
+        return DEFAULT_SIZE;
+    }
+
+    var size = initialSize();
+    var page = Math.max(1, parseInt(param('page'), 10) || 1);
+
+    // 선택 값이 목록에 없으면 기본값으로
+    if (!Array.prototype.some.call(select.options, function (o) { return +o.value === size; })) {
+        size = DEFAULT_SIZE;
+    }
+    select.value = String(size);
+
+    function clearYearHeads() {
+        [].slice.call(list.querySelectorAll('li.year-head')).forEach(function (el) {
+            el.parentNode.removeChild(el);
+        });
+    }
+
+    function insertYearHeads(visible) {
+        var last = null;
+        visible.forEach(function (li) {
+            var y = li.getAttribute('data-year');
+            if (y !== last) {
+                var head = document.createElement('li');
+                head.className = 'year-head';
+                head.textContent = y;
+                li.parentNode.insertBefore(head, li);
+                last = y;
+            }
+        });
+    }
+
+    function syncUrl() {
+        if (!window.history || !window.history.replaceState) { return; }
+        var q = '?page=' + page + '&size=' + size;
+        window.history.replaceState(null, '', window.location.pathname + q);
+    }
+
+    function button(label, targetPage, opts) {
+        opts = opts || {};
+        var a = document.createElement('a');
+        a.className = 'internal';
+        a.href = window.location.pathname + '?page=' + targetPage + '&size=' + size;
+        a.textContent = label;
+        if (opts.rel) { a.rel = opts.rel; }
+        a.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            page = targetPage;
+            render();
+            window.scrollTo(0, 0);
+        });
+        return a;
+    }
+
+    function renderPager(totalPages) {
+        pager.innerHTML = '';
+        if (totalPages <= 1) { pager.hidden = true; return; }
+        pager.hidden = false;
+
+        if (page > 1) { pager.appendChild(button('← 이전', page - 1, { rel: 'prev' })); }
+
+        // 현재 페이지 기준 앞뒤 2개 + 처음/끝은 항상 노출
+        var shown = [];
+        for (var i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || Math.abs(i - page) <= 2) { shown.push(i); }
+        }
+        var prev = 0;
+        shown.forEach(function (n) {
+            if (prev && n - prev > 1) {
+                var gap = document.createElement('span');
+                gap.className = 'gap';
+                gap.textContent = '…';
+                pager.appendChild(gap);
+            }
+            if (n === page) {
+                var cur = document.createElement('strong');
+                cur.className = 'current';
+                cur.textContent = String(n);
+                pager.appendChild(cur);
+            } else {
+                pager.appendChild(button(String(n), n));
+            }
+            prev = n;
+        });
+
+        if (page < totalPages) { pager.appendChild(button('다음 →', page + 1, { rel: 'next' })); }
+    }
+
+    function render() {
+        var perPage = size > 0 ? size : total;
+        var totalPages = perPage > 0 ? Math.ceil(total / perPage) : 1;
+        if (totalPages < 1) { totalPages = 1; }
+        if (page > totalPages) { page = totalPages; }
+
+        var start = (page - 1) * perPage;
+        var end = start + perPage;
+
+        clearYearHeads();
+        var visible = [];
+        items.forEach(function (li, idx) {
+            var on = idx >= start && idx < end;
+            li.hidden = !on;
+            if (on) { visible.push(li); }
+        });
+        insertYearHeads(visible);
+
+        if (summary) {
+            summary.textContent = size > 0
+                ? page + ' / ' + totalPages + ' 페이지 · 전체 ' + total + '편'
+                : '전체 ' + total + '편';
+        }
+        renderPager(totalPages);
+        syncUrl();
+    }
+
+    select.addEventListener('change', function () {
+        size = parseInt(select.value, 10);
+        page = 1;
+        try { localStorage.setItem(STORE_KEY, String(size)); } catch (e) { /* 무시 */ }
+        render();
+    });
+
+    controls.hidden = false;
+    render();
+}());
+</script>

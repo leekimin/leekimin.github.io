@@ -4,19 +4,34 @@ title : All Posts
 header : All Posts
 group: navigation
 pagination:
-  enabled: true
-  permalink: '/page/:num/'
+  enabled: false
 ---
 {% comment %}
-  paginator 는 jekyll-paginate-v2 가 있을 때만 생성된다.
-  GitHub Pages 기본 빌드(Deploy from a branch)에는 이 플러그인이 없어 nil 이 되므로,
-  그 경우 전체 글 목록으로 폴백해 페이지가 비어버리는 것을 막는다.
+  목록 항목이 제목 + 날짜 한 줄뿐이라 전체를 한 번에 내려보내고 브라우저에서 페이지를 나눈다.
+  서버 페이징(jekyll-paginate-v2)으로는 "페이지당 개수 선택"을 만들 수 없기 때문이다.
+  JS 가 없으면 아래 목록이 전부 그대로 보인다 (점진적 향상).
 {% endcomment %}
-{% if paginator.posts %}
-    {% assign posts_collate = paginator.posts %}
-{% else %}
-    {% assign posts_collate = site.posts %}
-{% endif %}
-{% include helpers/posts_collate %}
 
-{% include helpers/pagination %}
+<div class="post-pager-controls" id="pager-controls" hidden>
+    <label for="page-size">페이지당</label>
+    <select id="page-size">
+        <option value="20">20개</option>
+        <option value="50">50개</option>
+        <option value="100">100개</option>
+        <option value="0">전체</option>
+    </select>
+    <span id="page-summary" class="page-info"></span>
+</div>
+
+<ul class="post-list" id="post-list">
+    {% for post in site.posts %}
+    <li data-year="{{ post.date | date: '%Y' }}">
+        <a class="active internal" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+    </li>
+    {% endfor %}
+</ul>
+
+<nav class="pagination post-pagination" id="post-pager" role="navigation" aria-label="페이지 이동" hidden></nav>
+
+{% include helpers/post_pager %}

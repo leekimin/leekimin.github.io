@@ -16,7 +16,7 @@ plugins:
 # 목록 페이지 front matter 에 pagination.enabled: true 를 넣으면 적용된다.
 pagination:
   enabled: true
-  per_page: 5    # 글이 쌓이면 10~20 으로 올릴 것
+  per_page: 20   # 서버 페이징용 기본값. /blog/ 는 클라이언트 페이징(post_pager)을 쓴다
   permalink: '/page/:num/'
   title: ':title - :num 페이지'
   sort_field: 'date'
