@@ -3,6 +3,11 @@ layout: page
 title : All Posts
 header : All Posts
 group: navigation
+pagination:
+  enabled: true
+  permalink: '/page/:num/'
 ---
-{% assign posts_collate = site.posts %}
+{% assign posts_collate = paginator.posts %}
 {% include helpers/posts_collate %}
+
+{% include helpers/pagination %}

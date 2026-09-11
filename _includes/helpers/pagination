@@ -1,0 +1,23 @@
+{% if paginator.total_pages > 1 %}
+<nav class="pagination post-pagination" role="navigation" aria-label="페이지 이동">
+    {% if paginator.previous_page %}
+        <a class="internal prev" href="{{ paginator.previous_page_path | relative_url }}" rel="prev">← 이전</a>
+    {% endif %}
+
+    <span class="page-numbers">
+        {% for trail in paginator.page_trail %}
+            {% if trail.num == paginator.page %}
+                <strong class="current">{{ trail.num }}</strong>
+            {% else %}
+                <a class="internal" href="{{ trail.path | relative_url }}" title="{{ trail.title }}">{{ trail.num }}</a>
+            {% endif %}
+        {% endfor %}
+    </span>
+
+    {% if paginator.next_page %}
+        <a class="internal next" href="{{ paginator.next_page_path | relative_url }}" rel="next">다음 →</a>
+    {% endif %}
+</nav>
+
+<p class="page-info">{{ paginator.page }} / {{ paginator.total_pages }} 페이지 · 전체 {{ paginator.total_posts }}편</p>
+{% endif %}

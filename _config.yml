@@ -4,12 +4,26 @@ exclude: ["*.gem", "*.gemspec", "Gemfile", "Gemfile.lock", "node_modules", "Rake
 lang: ko # Language code as defined in _data/i18n.yml. en, en-gb, en-us, zh, zh-cn, zh-tw etc.
 permalink: /blog/:year/:month/:day/:title/
 
-whitelist: [jekyll-feed, jekyll-redirect-from, jekyll-seo-tag, jekyll-sitemap]
+whitelist: [jekyll-feed, jekyll-redirect-from, jekyll-seo-tag, jekyll-sitemap, jekyll-paginate-v2]
 plugins:
   - jekyll-feed
   - jekyll-redirect-from
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-paginate-v2
+
+# 페이지네이션 (jekyll-paginate-v2)
+# 목록 페이지 front matter 에 pagination.enabled: true 를 넣으면 적용된다.
+pagination:
+  enabled: true
+  per_page: 5    # 글이 쌓이면 10~20 으로 올릴 것
+  permalink: '/page/:num/'
+  title: ':title - :num 페이지'
+  sort_field: 'date'
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
 
 markdown: kramdown
 kramdown:
