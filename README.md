@@ -1,2 +1,95 @@
-# My Knowledge
+# Zero(0)
 
+> <https://leekimin.github.io>
+
+백엔드 · 인프라 학습 기록을 남기는 개인 블로그입니다.
+**매일 아침 6시에 자동으로 글 한 편이 생성되어 게시됩니다.**
+
+---
+
+## 이 블로그의 특징
+
+한 번에 몰아 쓰지 않고, 주제마다 **전체 목차를 먼저 설계한 뒤 하루에 한 단계씩** 채워갑니다.
+각 글은 5분 이내에 읽을 분량이고, 실행 가능한 명령어나 코드 예시를 포함합니다.
+
+글 작성은 [Claude Code](https://claude.com/claude-code)가 맡고, 스케줄러가 매일 호출합니다.
+**사람의 검수 없이 그대로 게시**되므로 모든 글 하단에 자동 생성 고지가 붙습니다.
+
+## 연재 중인 시리즈
+
+| 주제 | 목차 | 게시 요일 | 카테고리 |
+|------|------|-----------|----------|
+| Kubernetes | 26단계 | 월 · 수 · 금 | `k8s` |
+| AI-DLC | 30단계 | 화 | `AI` |
+| Harness Engineering | 29단계 | 목 | `AI` |
+| 시스템 아키텍처 | 30단계 | 토 | `Architecture` |
+| 투잡 개발 아이디어 | 매주 새 주제 | 일 | `Idea` |
+
+각 시리즈의 첫 글은 **전체 목차를 소개하는 로드맵**입니다. 거기서부터 읽으면 흐름이 잡힙니다.
+
+> **Kubernetes** — 온프레미스 클러스터를 직접 구축 · 운영하는 것을 목표로 합니다.
+> **시스템 아키텍처** — 애플리케이션 구조뿐 아니라 데이터 · 네트워크 · 보안 · 배포 · 운영까지 다루며,
+> 온프레미스 / 클라우드 / 폐쇄망의 서로 다른 제약 아래서의 설계 판단을 포함합니다.
+> **투잡 개발 아이디어** — 일요일 하루에 만들 수 있는 범위로, 웹 검색으로 최신 동향을 확인한 뒤 제안합니다.
+
+## 댓글
+
+각 글 하단에서 바로 작성할 수 있습니다. **GitHub 계정으로 로그인**이 필요합니다.
+
+댓글은 [giscus](https://giscus.app)로 동작하며, 실제 데이터는 이 저장소의
+[**Discussions**](https://github.com/leekimin/leekimin.github.io/discussions)
+(`Announcements` 카테고리)에 저장됩니다.
+
+- 블로그에서 쓴 댓글이 Discussions에 그대로 보이고, 반대로도 마찬가지입니다
+- 마크다운과 코드 블록을 지원합니다
+- 광고나 추적 스크립트가 없습니다
+- 서비스에 종속되지 않고 데이터가 저장소에 남습니다
+
+글 내용의 오류 지적이나 보완 의견을 환영합니다. 자동 생성 글이라 사실과 다른 부분이 있을 수 있습니다.
+
+## 자동 포스팅 파이프라인
+
+글을 만들어 게시하는 스케줄러는 별도로 관리합니다.
+
+```
+작업 스케줄러 (매일 06:00)
+  └─ run-daily.ps1
+       ├─ git pull
+       ├─ 요일 → 오늘 주제 결정
+       ├─ 진행 단계 확인 (state.json)
+       ├─ Claude Code 호출  ← 마크다운만 반환. 파일·git 권한 없음
+       ├─ _posts/YYYY-MM-DD-제목.md 생성 (front matter는 스크립트가 작성)
+       ├─ 진행 단계 갱신
+       └─ git add / commit / push
+```
+
+모델에게 파일 쓰기와 git 권한을 주지 않는 것이 설계의 핵심입니다.
+모델은 본문만 생산하고, 저장 · 커밋 · 푸시는 스크립트가 담당합니다.
+
+## 로컬 실행
+
+```bash
+bundle install
+bundle exec jekyll serve
+# http://localhost:4000
+```
+
+댓글은 로컬에서 동작하지 않습니다. 배포된 사이트에서만 확인할 수 있습니다.
+
+## 구성
+
+| 경로 | 내용 |
+|------|------|
+| `_posts/` | 게시글 |
+| `_layouts/`, `_includes/` | 템플릿 |
+| `_includes/common/giscus.html` | 댓글 위젯 |
+| `_config.yml` | 사이트 · 댓글 설정 |
+
+특정 글의 댓글을 끄려면 해당 글 front matter에 `comments: false`를 넣습니다.
+
+## 라이선스
+
+테마는 [Simple Texture](https://github.com/yizeng/jekyll-theme-simple-texture)
+(© 2017 Yi Zeng, MIT License)를 사용합니다. 원본 테마 문서는 [README_Original.md](README_Original.md)에 있습니다.
+
+글 내용은 [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)을 따릅니다.
