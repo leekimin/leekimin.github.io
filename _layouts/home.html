@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html class="no-js" lang="{{ site.lang }}">
-<!--<![endif]-->
+
+{% comment %}
+  이 페이지는 진입 연출을 보여준 뒤 /blog/ 로 넘기는 것 말고는 하는 일이 없다.
+  그래서 테마의 home.css, jQuery, Pace, Modernizr 를 싣지 않는다.
+  전부 <head> 에서 렌더를 막기 때문에, 실어두면 연출이 시작되기도 전에 화면이 멎는다.
+{% endcomment %}
 
 <head>
     {% include common/meta.html %}
-    <link href='{{ site.baseurl }}/assets/stylesheets/home.css' rel="stylesheet" type="text/css">
-    {% include common/libraries.html %}
+    {% include common/bbs-head.html %}
     {% if site.google_tag_manager %}
         {% include common/gtm-head.html %}
     {% endif %}
@@ -21,10 +20,6 @@
         {% include common/gtm-body.html %}
     {% endif %}
 
-    {% comment %}
-      이 페이지는 원래 /blog/ 로 넘기는 것 말고는 하는 일이 없었다.
-      진입 연출을 보여준 뒤 같은 자리로 이동한다. 연출을 못 돌리는 상황이면 즉시 이동한다.
-    {% endcomment %}
     {% include common/bbs-intro.html %}
 </body>
 

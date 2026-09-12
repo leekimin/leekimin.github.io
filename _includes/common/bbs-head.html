@@ -1,0 +1,155 @@
+<!--
+  PC통신 진입 화면의 글꼴과 스타일. <head> 에서 불러야 첫 페인트부터 제대로 그려진다.
+  글꼴은 갈무리(Galmuri) — 도스/PC통신 시절 비트맵 글꼴을 복각한 것이다.
+  비트맵이라 설계 크기(11px)의 정수배에서 가장 또렷하다. 그래서 22px / 11px 만 쓴다.
+-->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="font" type="font/woff2"
+      href="https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/GalmuriMono11.woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/galmuri.css">
+
+<style>
+html, body { margin: 0; padding: 0; background: #000; height: 100%; }
+
+#bbs {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    font-family: GalmuriMono11, Galmuri11, D2Coding, Consolas, "Courier New", monospace;
+    transition: opacity .45s ease;
+}
+#bbs[hidden] { display: none !important; }
+#bbs.bbs-out { opacity: 0; }
+
+.bbs-win {
+    width: 100%;
+    max-width: 900px;
+    background: #0000a8;
+    border: 2px solid #3a3a6a;
+    box-shadow: 0 0 0 1px #000, 0 14px 50px rgba(0, 0, 0, .8);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 창 제목 표시줄 — 그 시절 통신 에뮬레이터 느낌 */
+.bbs-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(90deg, #000080, #1084d0);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 4px 4px 7px;
+    flex: 0 0 auto;
+}
+.bbs-title .sp { margin-left: auto; }
+.bbs-title b {
+    display: inline-block;
+    width: 17px;
+    height: 15px;
+    line-height: 14px;
+    text-align: center;
+    background: #c0c0c0;
+    color: #000;
+    border: 1px solid #fff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.bbs-screen {
+    margin: 0;
+    padding: 12px 14px;
+    /* 18행 고정. 실제 단말처럼 넘치는 줄은 위로 밀려 올라간다 (JS가 잘라낸다) */
+    height: 24.3em;
+    box-sizing: content-box;
+    color: #c8c8c8;
+    font-size: 22px;
+    line-height: 1.35;
+    /* 좁은 화면에서는 줄이 접힌다. 접히더라도 JS가 항상 맨 아래로 붙여준다 */
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+/* 상태 표시줄 */
+.bbs-status {
+    display: flex;
+    flex-wrap: wrap;
+    background: #c0c0c0;
+    color: #000;
+    font-size: 11px;
+    line-height: 1.7;
+    border-top: 2px solid #000080;
+    flex: 0 0 auto;
+}
+.bbs-status span {
+    padding: 2px 8px;
+    border-right: 1px solid #808080;
+    white-space: nowrap;
+}
+.bbs-status span:last-child { border-right: 0; margin-left: auto; }
+.bbs-led { color: #008000; letter-spacing: -1px; }
+
+/* 색상 — 옛 ANSI 팔레트 */
+.c-w  { color: #fff; }
+.c-cy { color: #54fcfc; }
+.c-cd { color: #00a8a8; }
+.c-ye { color: #fcfc54; }
+.c-mg { color: #fc54fc; }
+.c-gn { color: #54fc54; }
+.c-dim { color: #8a8ac0; }
+
+.bbs-cur {
+    display: inline-block;
+    width: .5em;
+    height: 1em;
+    margin-bottom: -.12em;
+    background: #c8c8c8;
+    animation: bbs-blink 1s steps(1) infinite;
+}
+@keyframes bbs-blink { 50% { opacity: 0; } }
+
+/*
+  주사선 · 비네팅 · 화면 떨림은 넣었다가 뺐다.
+  "모니터를 촬영한 영상"처럼 보여서, 화면 자체의 또렷함을 해쳤다.
+  비트맵 글꼴은 픽셀이 그대로 보일 때가 가장 그 시절 같다.
+*/
+
+.bbs-skip {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 100000;
+    background: rgba(0, 0, 0, .5);
+    color: #9a9ac8;
+    border: 1px solid #3a3a6a;
+    font-family: inherit;
+    font-size: 11px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.bbs-skip:hover { color: #fff; border-color: #6a6aa0; }
+
+/* 비트맵 글꼴이라 11px 의 정수배가 아니면 흐려진다. 22 / 16.5 / 11 만 쓴다 */
+@media (max-width: 939px), (max-height: 720px) {
+    .bbs-screen { font-size: 16.5px; }
+}
+@media (max-width: 620px), (max-height: 540px) {
+    .bbs-screen { font-size: 11px; padding: 8px; }
+    .bbs-status span:nth-child(4), .bbs-status span:nth-child(5) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bbs-cur { animation: none; }
+}
+</style>

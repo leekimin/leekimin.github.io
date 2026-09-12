@@ -1,0 +1,50 @@
+<!--
+  접속 화면(PC통신 인트로) 다시 보기 버튼.
+  인트로는 한 세션에 한 번만 재생되므로, ?intro=1 로 강제 재생시킨다.
+
+  position: fixed 라 문서 어디에 두어도 화면 우상단에 붙는다.
+  다만 좁은 화면에서는 테마의 검색 버튼이 우상단에 있어서, 그때는 우하단으로 내린다.
+-->
+<style>
+.intro-replay {
+    position: fixed;
+    top: 12px;
+    right: 14px;
+    z-index: 900;
+
+    display: inline-block;
+    padding: 5px 11px;
+
+    /* 갈무리 글꼴은 인트로 페이지에서만 불러온다. 버튼 하나 때문에 478KB를 받을 이유는 없다 */
+    font-family: D2Coding, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+
+    color: #c8c8c8;
+    background: #0000a8;
+    border: 1px solid #5a5a9a;
+    border-radius: 2px;
+    text-decoration: none;
+    opacity: .55;
+    transition: opacity .15s ease, color .15s ease;
+}
+.intro-replay:hover,
+.intro-replay:focus {
+    opacity: 1;
+    color: #fcfc54;
+    background: #0000a8;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    /* 테마의 검색 버튼과 겹치지 않도록 아래로 */
+    .intro-replay { top: auto; bottom: 14px; right: 12px; font-size: 11px; padding: 4px 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .intro-replay { transition: none; }
+}
+</style>
+
+<a class="intro-replay" href="{{ '/' | relative_url }}?intro=1"
+   title="PC통신 접속 화면을 다시 재생합니다">▶ 접속 화면</a>

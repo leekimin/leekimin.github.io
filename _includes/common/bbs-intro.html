@@ -10,153 +10,6 @@
   - 다시 보려면 /?intro=1
 -->
 
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-#bbs {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
-    font-family: "Nanum Gothic Coding", D2Coding, Consolas, "Courier New", monospace;
-    transition: opacity .45s ease;
-}
-#bbs[hidden] { display: none !important; }
-#bbs.bbs-out { opacity: 0; }
-
-.bbs-win {
-    width: 100%;
-    max-width: 780px;
-    background: #0000a8;
-    border: 2px solid #3a3a6a;
-    box-shadow: 0 0 0 1px #000, 0 14px 50px rgba(0, 0, 0, .8);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-}
-
-/* 창 제목 표시줄 — 그 시절 통신 에뮬레이터 느낌 */
-.bbs-title {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: linear-gradient(90deg, #000080, #1084d0);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 3px 4px 3px 6px;
-    letter-spacing: .02em;
-    flex: 0 0 auto;
-}
-.bbs-title .sp { margin-left: auto; }
-.bbs-title b {
-    display: inline-block;
-    width: 16px;
-    height: 14px;
-    line-height: 12px;
-    text-align: center;
-    background: #c0c0c0;
-    color: #000;
-    border: 1px solid #fff;
-    border-right-color: #404040;
-    border-bottom-color: #404040;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-.bbs-screen {
-    margin: 0;
-    padding: 10px 12px;
-    min-height: 22em;
-    color: #c8c8c8;
-    font-size: 14px;
-    line-height: 1.45;
-    white-space: pre-wrap;
-    word-break: break-all;
-    overflow: hidden;
-    flex: 1 1 auto;
-}
-
-/* 상태 표시줄 */
-.bbs-status {
-    display: flex;
-    flex-wrap: wrap;
-    background: #c0c0c0;
-    color: #000;
-    font-size: 11px;
-    line-height: 1.6;
-    border-top: 2px solid #000080;
-    flex: 0 0 auto;
-}
-.bbs-status span {
-    padding: 1px 7px;
-    border-right: 1px solid #808080;
-    white-space: nowrap;
-}
-.bbs-status span:last-child { border-right: 0; margin-left: auto; }
-.bbs-led { color: #008000; letter-spacing: -1px; }
-
-/* 색상 — 옛 ANSI 팔레트 */
-.c-w  { color: #fff; }
-.c-cy { color: #54fcfc; }
-.c-cd { color: #00a8a8; }
-.c-ye { color: #fcfc54; }
-.c-mg { color: #fc54fc; }
-.c-gn { color: #54fc54; }
-.c-dim { color: #8a8ac0; }
-.c-inv { background: #c8c8c8; color: #0000a8; }
-
-.bbs-cur {
-    display: inline-block;
-    width: .62em;
-    height: 1.05em;
-    margin-bottom: -.18em;
-    background: #c8c8c8;
-    animation: bbs-blink 1s steps(1) infinite;
-}
-@keyframes bbs-blink { 50% { opacity: 0; } }
-
-/* CRT 느낌: 주사선 + 가장자리 어둠 */
-.bbs-crt {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-        repeating-linear-gradient(rgba(0, 0, 0, .22) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
-        radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .55) 100%);
-}
-
-.bbs-skip {
-    position: absolute;
-    right: 14px;
-    bottom: 12px;
-    z-index: 100000;
-    background: rgba(0, 0, 0, .5);
-    color: #9a9ac8;
-    border: 1px solid #3a3a6a;
-    font: inherit;
-    font-size: 11px;
-    padding: 4px 10px;
-    cursor: pointer;
-}
-.bbs-skip:hover { color: #fff; border-color: #6a6aa0; }
-
-@media (max-width: 600px) {
-    .bbs-screen { font-size: 10px; padding: 8px; min-height: 20em; }
-    .bbs-status { font-size: 9.5px; }
-    .bbs-status span:nth-child(4), .bbs-status span:nth-child(5) { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-    .bbs-cur { animation: none; }
-}
-</style>
-
 <div id="bbs" hidden>
     <div class="bbs-win">
         <div class="bbs-title">
@@ -166,14 +19,13 @@
         <pre class="bbs-screen" id="bbs-screen"></pre>
         <div class="bbs-status">
             <span>&lt;한글&gt;-2</span>
-            <span class="bbs-led">■■</span>
+            <span class="bbs-led" id="bbs-led">■■</span>
             <span>연결 <em id="bbs-elapsed">0:00</em></span>
             <span>KS5601 완성</span>
             <span>1- 19200-N-8-1</span>
             <span>갈무리 끝</span>
             <span id="bbs-clock">0:00:00</span>
         </div>
-        <div class="bbs-crt"></div>
     </div>
     <button class="bbs-skip" id="bbs-skip" type="button">건너뛰기 (아무 키나)</button>
 </div>
@@ -188,6 +40,7 @@
 
     var TARGET = "{{ '/blog/' | relative_url }}";
     var KEY = 'bbsIntroSeen';
+    var ROWS = 18;          // 화면에 보이는 줄 수. 넘치면 위로 밀려 올라간다
 
     function go() { window.location.replace(TARGET); }
 
@@ -202,59 +55,74 @@
     try { sessionStorage.setItem(KEY, '1'); } catch (e) { /* 무시 */ }
 
     var root = document.getElementById('bbs');
-    var screen = document.getElementById('bbs-screen');
+    var out = document.getElementById('bbs-screen');
     var skipBtn = document.getElementById('bbs-skip');
-    if (!root || !screen) { go(); return; }
+    if (!root || !out) { go(); return; }
     root.hidden = false;
 
     // 연출이 어디선가 멈춰도 반드시 도착하도록
-    var deadman = setTimeout(go, 20000);
+    var deadman = setTimeout(go, 25000);
 
-    // ── 상태 표시줄 시계
+    // ── 상태 표시줄: 연결 시간과 시계
     var t0 = Date.now();
     function two(n) { return (n < 10 ? '0' : '') + n; }
+    var elapsedEl = document.getElementById('bbs-elapsed');
+    var clockEl = document.getElementById('bbs-clock');
     var clockTimer = setInterval(function () {
         var s = Math.floor((Date.now() - t0) / 1000);
-        var el = document.getElementById('bbs-elapsed');
-        if (el) { el.textContent = Math.floor(s / 60) + ':' + two(s % 60); }
-        var d = new Date();
-        var ck = document.getElementById('bbs-clock');
-        if (ck) { ck.textContent = d.getHours() + ':' + two(d.getMinutes()) + ':' + two(d.getSeconds()); }
+        if (elapsedEl) { elapsedEl.textContent = Math.floor(s / 60) + ':' + two(s % 60); }
+        if (clockEl) {
+            var d = new Date();
+            clockEl.textContent = d.getHours() + ':' + two(d.getMinutes()) + ':' + two(d.getSeconds());
+        }
     }, 1000);
 
-    // ── 화면 출력
-    var cursor = '<span class="bbs-cur"></span>';
-    var buf = '';
-    function paint() { screen.innerHTML = buf + cursor; }
+    // 수신 표시등 — 글자가 들어오는 동안 깜빡인다
+    var ledEl = document.getElementById('bbs-led');
+    var rx = false;
+    var ledTimer = setInterval(function () {
+        if (ledEl) { ledEl.style.color = rx ? '#00e000' : '#006000'; rx = false; }
+    }, 90);
 
-    function esc(s) {
-        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // ── 화면 버퍼: 완성된 줄 + 지금 그리는 중인 줄
+    var CURSOR = '<span class="bbs-cur"></span>';
+    var lines = [];
+    var cur = '';
+
+    function paint() {
+        var all = lines.concat([cur + CURSOR]);
+        if (all.length > ROWS) { all = all.slice(all.length - ROWS); }
+        out.innerHTML = all.join('\n');
+        // 줄이 접히는 좁은 화면에서도 늘 마지막 줄이 보이도록
+        out.scrollTop = out.scrollHeight;
     }
+    function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function wrap(s, cls) { return cls ? '<span class="' + cls + '">' + esc(s) + '</span>' : esc(s); }
 
     // ── 연출 대본
-    // kind: out=즉시 출력, type=한 글자씩, wait=대기, clear=화면 지움
+    //  out  = 회선으로 들어오는 글자 (빠르게 흘러 들어옴)
+    //  type = 사람이 자판을 두드리는 글자 (from 위치부터 한 글자씩)
+    //  wait = 대기,  clear = 화면 지움
     var S = [
         { k: 'type', s: 'ATZ', cls: 'c-dim', sp: 70 },
         { k: 'out',  s: 'OK', cls: 'c-dim' },
         { k: 'type', s: 'ATDT', cls: 'c-dim', sp: 70 },
         { k: 'wait', ms: 620 },
         { k: 'out',  s: 'CONNECT 19200', cls: 'c-dim' },
-        { k: 'wait', ms: 300 },
+        { k: 'wait', ms: 260 },
         { k: 'out',  s: '' },
         { k: 'out',  s: 'Trying zero.bbs ...', cls: 'c-w' },
-        { k: 'wait', ms: 420 },
+        { k: 'wait', ms: 380 },
         { k: 'out',  s: 'Connected to zero.bbs.', cls: 'c-w' },
         { k: 'out',  s: "Escape character is '^]'.", cls: 'c-w' },
         { k: 'out',  s: '' },
-        { k: 'wait', ms: 260 },
+        { k: 'wait', ms: 220 },
         { k: 'out',  s: 'SunOS 5.6', cls: 'c-w' },
-        { k: 'wait', ms: 420 },
+        { k: 'wait', ms: 380 },
         { k: 'out',  s: '' },
         { k: 'out',  s: '[63 "701456789;0A"?', cls: 'c-dim' },
         { k: 'out',  s: "'ZERO(0)'에 오신 것을 환영합니다.(1ion% pts/0)!!", cls: 'c-w' },
         { k: 'out',  s: '' },
-        { k: 'wait', ms: 260 },
         { k: 'out',  s: '      ◈  Z E R O ( 0 )  정보통신망  ◈', cls: 'c-cy' },
         { k: 'out',  s: '  ────────────────────────────────────────────', cls: 'c-cd' },
         { k: 'out',  s: '   매일 아침 6시, 학습 기록이 자동으로 올라옵니다.', cls: 'c-w' },
@@ -263,34 +131,35 @@
         { k: 'out',  s: '  ▷ 쿠버네티스 · 시스템 아키텍처 · AI-DLC · 투잡 아이디어', cls: 'c-gn' },
         { k: 'out',  s: '  ▷ 댓글은 GitHub 계정으로 작성할 수 있습니다.', cls: 'c-gn' },
         { k: 'out',  s: '' },
-        { k: 'wait', ms: 340 },
+        { k: 'wait', ms: 280 },
         { k: 'out',  s: "ID가 없는 분은 '손님' 또는 'GUEST'를 입력하십시오.", cls: 'c-ye' },
         { k: 'out',  s: '' },
         { k: 'type', s: '아 이 디 : leekimin', cls: 'c-w', sp: 62, from: 9 },
-        { k: 'wait', ms: 240 },
+        { k: 'wait', ms: 220 },
         { k: 'type', s: '비밀번호 : ********', cls: 'c-w', sp: 55, from: 9 },
-        { k: 'wait', ms: 450 },
+        { k: 'wait', ms: 400 },
         { k: 'out',  s: '' },
         { k: 'out',  s: '접속을 확인하고 있습니다 ...', cls: 'c-dim' },
-        { k: 'wait', ms: 620 },
+        { k: 'wait', ms: 560 },
         { k: 'clear' },
         { k: 'out',  s: 'ZERO(0)', cls: 'c-cy' },
         { k: 'out',  s: 'TOP                    초기화면            leekimin.github.io', cls: 'c-dim' },
         { k: 'out',  s: '' },
         { k: 'out',  s: '  [ 기본서비스 ]   1. 안내/소개    2. 블 로 그    3. 카테고리', cls: 'c-w' },
-        { k: 'out',  s: '  [ 커 뮤 니 티 ]  11. 태    그   12. 댓    글   13. GitHub', cls: 'c-w' },
+        { k: 'out',  s: '  [ 커뮤니티   ]  11. 태    그   12. 댓    글   13. GitHub', cls: 'c-w' },
+        { k: 'out',  s: '  [ 소 모 임   ]  21. 민이마을', cls: 'c-ye' },
         { k: 'out',  s: '' },
         { k: 'out',  s: '  ▶ HOT   매일 06:00 자동 게시! 오늘 글은 벌써 올라왔습니다', cls: 'c-mg' },
         { k: 'out',  s: '  ▶ COOL  투잡 아이디어 — 앱스토어 순위로 찾는 하루짜리 프로젝트', cls: 'c-cy' },
         { k: 'out',  s: '' },
         { k: 'out',  s: '  ─────────────────────────────────────────────────────────', cls: 'c-cd' },
         { k: 'out',  s: '명령어안내(C) 직접이동(GO) 종료(X)', cls: 'c-dim' },
-        { k: 'wait', ms: 450 },
+        { k: 'wait', ms: 400 },
         { k: 'type', s: '선택> 2', cls: 'c-ye', sp: 180, from: 6 },
-        { k: 'wait', ms: 380 },
+        { k: 'wait', ms: 340 },
         { k: 'out',  s: '' },
         { k: 'out',  s: '블로그로 이동합니다 ...', cls: 'c-gn' },
-        { k: 'wait', ms: 520 }
+        { k: 'wait', ms: 500 }
     ];
 
     var timer = null;
@@ -302,8 +171,17 @@
         clearTimeout(timer);
         clearTimeout(deadman);
         clearInterval(clockTimer);
+        clearInterval(ledTimer);
         root.classList.add('bbs-out');
         setTimeout(go, 420);
+    }
+
+    // 한 줄을 다 그리고 나면 완성된 줄로 넘긴다
+    function commit(next, gap) {
+        lines.push(cur);
+        cur = '';
+        paint();
+        timer = setTimeout(next, gap);
     }
 
     var i = 0;
@@ -313,25 +191,37 @@
         var it = S[i++];
 
         if (it.k === 'wait') { timer = setTimeout(step, it.ms); return; }
-        if (it.k === 'clear') { buf = ''; paint(); timer = setTimeout(step, 260); return; }
-        if (it.k === 'out') { buf += wrap(it.s, it.cls) + '\n'; paint(); timer = setTimeout(step, 42); return; }
+        if (it.k === 'clear') { lines = []; cur = ''; paint(); timer = setTimeout(step, 240); return; }
 
-        // type: from 위치까지는 한 번에 찍고, 그 뒤부터 한 글자씩
+        var text = it.s;
+        if (text.length === 0) { commit(step, 34); return; }
+
+        if (it.k === 'out') {
+            // 회선으로 들어오는 글자. 한 번에 3~8자씩 몰아 들어와야 모뎀처럼 보인다
+            var n = 0;
+            (function wire() {
+                if (done) { return; }
+                n = Math.min(text.length, n + 3 + Math.floor(Math.random() * 6));
+                cur = wrap(text.slice(0, n), it.cls);
+                rx = true;
+                paint();
+                if (n < text.length) { timer = setTimeout(wire, 16); }
+                else { commit(step, 24); }
+            }());
+            return;
+        }
+
+        // type: 프롬프트까지는 이미 화면에 있고, 그 뒤를 사람이 친다
         var head = it.s.slice(0, it.from || 0);
         var tail = it.s.slice(it.from || 0);
-        var base = buf + wrap(head, it.cls);
-        var n = 0;
-        (function tick() {
+        var m = 0;
+        (function key() {
             if (done) { return; }
-            n++;
-            buf = base + wrap(tail.slice(0, n), it.cls);
+            m++;
+            cur = wrap(head + tail.slice(0, m), it.cls);
             paint();
-            if (n < tail.length) {
-                timer = setTimeout(tick, it.sp);
-            } else {
-                buf += '\n';
-                timer = setTimeout(step, 120);
-            }
+            if (m < tail.length) { timer = setTimeout(key, it.sp); }
+            else { commit(step, 120); }
         }());
     }
 
@@ -345,7 +235,25 @@
     root.addEventListener('touchstart', skip, { passive: true });
     if (skipBtn) { skipBtn.addEventListener('click', skip); }
 
+    // 파란 창과 깜빡이는 커서는 즉시 보여준다 (모뎀 기다리는 화면처럼)
     paint();
-    step();
+
+    // 갈무리는 비트맵 글꼴이라 늦게 오면 첫 줄들이 다른 글꼴로 찍혔다가 바뀐다.
+    // 글꼴이 준비된 뒤에 시작하고, 너무 늦으면 그냥 시작한다.
+    var started = false;
+    function begin() {
+        if (started || done) { return; }
+        started = true;
+        step();
+    }
+    if (document.fonts && document.fonts.load) {
+        var fontTimer = setTimeout(begin, 1500);
+        var ready = function () { clearTimeout(fontTimer); begin(); };
+        try {
+            document.fonts.load('22px GalmuriMono11', '가나다').then(ready, ready);
+        } catch (e) { ready(); }
+    } else {
+        begin();
+    }
 }());
 </script>
