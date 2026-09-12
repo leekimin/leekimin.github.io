@@ -21,11 +21,11 @@
         {% include common/gtm-body.html %}
     {% endif %}
 
-    <script>
-		location.href = "/blog/";
-	</script>
-
-    {% include home/scripts.html %}
+    {% comment %}
+      이 페이지는 원래 /blog/ 로 넘기는 것 말고는 하는 일이 없었다.
+      진입 연출을 보여준 뒤 같은 자리로 이동한다. 연출을 못 돌리는 상황이면 즉시 이동한다.
+    {% endcomment %}
+    {% include common/bbs-intro.html %}
 </body>
 
 </html>
