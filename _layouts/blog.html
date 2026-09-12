@@ -9,6 +9,9 @@
 
 <head>
     {% include common/meta.html %}
+    {% comment %} 본문 글꼴이라 반드시 받는다. CSS 파싱을 기다리지 않고 먼저 시작시킨다 {% endcomment %}
+    <link rel="preload" as="font" type="font/woff2"
+          href="{{ '/assets/fonts/DungGeunMo.woff2' | relative_url }}" crossorigin>
     <link href='{{ site.baseurl }}/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
     {% include common/libraries.html %}
     {% if site.google_tag_manager %}

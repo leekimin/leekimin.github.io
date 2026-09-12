@@ -16,7 +16,8 @@
             <span>ZERO(0) BBS - 접속</span>
             <span class="sp"></span><b>_</b><b>□</b><b>×</b>
         </div>
-        <pre class="bbs-screen" id="bbs-screen"></pre>
+        <!-- 완성된 줄과 그리는 중인 줄을 나눠 둔다. 매 프레임 화면 전체를 다시 만들지 않기 위해서다 -->
+        <pre class="bbs-screen" id="bbs-screen"><span id="bbs-done"></span><span id="bbs-cur"></span></pre>
         <div class="bbs-status">
             <span>&lt;한글&gt;-2</span>
             <span class="bbs-led" id="bbs-led">■■</span>
@@ -89,13 +90,20 @@
     var lines = [];
     var cur = '';
 
-    function paint() {
-        var all = lines.concat([cur + CURSOR]);
-        if (all.length > ROWS) { all = all.slice(all.length - ROWS); }
-        out.innerHTML = all.join('\n');
+    var doneEl = document.getElementById('bbs-done');
+    var curEl = document.getElementById('bbs-cur');
+
+    // 완성된 줄. 줄이 늘어날 때만 다시 그린다
+    function paintDone() {
+        var vis = lines;
+        if (vis.length > ROWS - 1) { vis = vis.slice(vis.length - (ROWS - 1)); }
+        doneEl.innerHTML = vis.length ? vis.join('\n') + '\n' : '';
         // 줄이 접히는 좁은 화면에서도 늘 마지막 줄이 보이도록
         out.scrollTop = out.scrollHeight;
     }
+    // 그리는 중인 줄. 글자 하나 들어올 때마다 여기만 바뀐다
+    function paintCur() { curEl.innerHTML = cur + CURSOR; }
+    function paint() { paintDone(); paintCur(); }
     function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function wrap(s, cls) { return cls ? '<span class="' + cls + '">' + esc(s) + '</span>' : esc(s); }
 
@@ -123,13 +131,13 @@
         { k: 'out',  s: '[63 "701456789;0A"?', cls: 'c-dim' },
         { k: 'out',  s: "'ZERO(0)'에 오신 것을 환영합니다.(1ion% pts/0)!!", cls: 'c-w' },
         { k: 'out',  s: '' },
-        { k: 'out',  s: '      ◈  Z E R O ( 0 )  정보통신망  ◈', cls: 'c-cy' },
+        { k: 'out',  s: '      ◎  Z E R O ( 0 )  정보통신망  ◎', cls: 'c-cy' },
         { k: 'out',  s: '  ────────────────────────────────────────────', cls: 'c-cd' },
         { k: 'out',  s: '   매일 아침 6시, 학습 기록이 자동으로 올라옵니다.', cls: 'c-w' },
         { k: 'out',  s: '   사람의 검수 없이 게시되므로 오류가 있을 수 있습니다.', cls: 'c-dim' },
         { k: 'out',  s: '' },
-        { k: 'out',  s: '  ▷ 쿠버네티스 · 시스템 아키텍처 · AI-DLC · 투잡 아이디어', cls: 'c-gn' },
-        { k: 'out',  s: '  ▷ 댓글은 GitHub 계정으로 작성할 수 있습니다.', cls: 'c-gn' },
+        { k: 'out',  s: '  » 쿠버네티스 · 시스템 아키텍처 · AI-DLC · 투잡 아이디어', cls: 'c-gn' },
+        { k: 'out',  s: '  » 댓글은 GitHub 계정으로 작성할 수 있습니다.', cls: 'c-gn' },
         { k: 'out',  s: '' },
         { k: 'wait', ms: 280 },
         { k: 'out',  s: "ID가 없는 분은 '손님' 또는 'GUEST'를 입력하십시오.", cls: 'c-ye' },
@@ -149,8 +157,8 @@
         { k: 'out',  s: '  [ 커뮤니티   ]  11. 태    그   12. 댓    글   13. GitHub', cls: 'c-w' },
         { k: 'out',  s: '  [ 소 모 임   ]  21. 민이마을', cls: 'c-ye' },
         { k: 'out',  s: '' },
-        { k: 'out',  s: '  ▶ HOT   매일 06:00 자동 게시! 오늘 글은 벌써 올라왔습니다', cls: 'c-mg' },
-        { k: 'out',  s: '  ▶ COOL  투잡 아이디어 — 앱스토어 순위로 찾는 하루짜리 프로젝트', cls: 'c-cy' },
+        { k: 'out',  s: '  ★ HOT   매일 06:00 자동 게시! 오늘 글은 벌써 올라왔습니다', cls: 'c-mg' },
+        { k: 'out',  s: '  ★ COOL  투잡 아이디어 — 앱스토어 순위로 찾는 하루짜리 프로젝트', cls: 'c-cy' },
         { k: 'out',  s: '' },
         { k: 'out',  s: '  ─────────────────────────────────────────────────────────', cls: 'c-cd' },
         { k: 'out',  s: '명령어안내(C) 직접이동(GO) 종료(X)', cls: 'c-dim' },
@@ -204,7 +212,7 @@
                 n = Math.min(text.length, n + 3 + Math.floor(Math.random() * 6));
                 cur = wrap(text.slice(0, n), it.cls);
                 rx = true;
-                paint();
+                paintCur();
                 if (n < text.length) { timer = setTimeout(wire, 16); }
                 else { commit(step, 24); }
             }());
@@ -219,7 +227,7 @@
             if (done) { return; }
             m++;
             cur = wrap(head + tail.slice(0, m), it.cls);
-            paint();
+            paintCur();
             if (m < tail.length) { timer = setTimeout(key, it.sp); }
             else { commit(step, 120); }
         }());
@@ -238,7 +246,7 @@
     // 파란 창과 깜빡이는 커서는 즉시 보여준다 (모뎀 기다리는 화면처럼)
     paint();
 
-    // 갈무리는 비트맵 글꼴이라 늦게 오면 첫 줄들이 다른 글꼴로 찍혔다가 바뀐다.
+    // 둥근모꼴은 비트맵 고정폭이라, 늦게 와서 다른 글꼴로 찍히면 글자 폭이 달라져 열이 어긋난다.
     // 글꼴이 준비된 뒤에 시작하고, 너무 늦으면 그냥 시작한다.
     var started = false;
     function begin() {
@@ -250,7 +258,7 @@
         var fontTimer = setTimeout(begin, 1500);
         var ready = function () { clearTimeout(fontTimer); begin(); };
         try {
-            document.fonts.load('22px GalmuriMono11', '가나다').then(ready, ready);
+            document.fonts.load('16px DungGeunMoIntro', '가나다').then(ready, ready);
         } catch (e) { ready(); }
     } else {
         begin();

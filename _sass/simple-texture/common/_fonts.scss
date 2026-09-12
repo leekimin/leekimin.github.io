@@ -26,6 +26,12 @@
     font-weight: normal;
     font-style: normal;
 
+    // 이 글꼴은 본문·제목·코드 전부에 쓰인다. 받아오는 동안 글자가 안 보이면 안 되므로 swap.
+    // 기본값(auto)은 최대 3초간 글자를 감추기 때문에 이것이 로딩 중 버벅임의 주범이었다.
+    font-display: swap;
+
     src: url('../fonts/DungGeunMo.eot');
-    src: url('../fonts/DungGeunMo.eot?#iefix') format('embedded-opentype'), url('../fonts/DungGeunMo.woff') format('woff'), url('../fonts/DungGeunMo.ttf') format('truetype');
+    // woff2 를 맨 앞에. 저장소에 있는데도 참조하지 않아 1.6MB woff 를 받고 있었다 (924KB로 감소).
+    // DungGeunMo.ttf 는 저장소에 없어 404 였으므로 뺐다.
+    src: url('../fonts/DungGeunMo.eot?#iefix') format('embedded-opentype'), url('../fonts/DungGeunMo.woff2') format('woff2'), url('../fonts/DungGeunMo.woff') format('woff');
 }
